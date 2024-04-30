@@ -1,0 +1,20 @@
+{
+    "name": "Web Note",
+    "short_name": "WN",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#2196f3",
+    "icons": [
+        {
+            "src": "./images/logo.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "./images/logo.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}
