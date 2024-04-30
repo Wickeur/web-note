@@ -1,43 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Note index{% endblock %}
+{% block title %}Mes notes
+{% endblock %}
 
 {% block body %}
-    <h1>Note index</h1>
+	<div id="accordion">
+		{% for note in notes %}
+			<div class="card">
+				<div class="card-header" id="heading{{ note.id }}">
+					<h5 class="mb-0">
+						<button class="btn" style="width:100%" data-toggle="collapse" data-target="#collapse{{ note.id }}" aria-expanded="true" aria-controls="collapse{{ note.id }}">
+							<span class="float-left">{{ note.title }}</span>
+							<span class="float-right">
+								{% if note.updatedAt %}
+									{{ note.updatedAt|date('d/m/Y') }}
+								{% else %}
+									{{ note.createdAt|date('d/m/Y') }}
+								{% endif %}
+							</span>
+						</button>
+					</h5>
+				</div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>RemindDate</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for note in notes %}
-            <tr>
-                <td>{{ note.id }}</td>
-                <td>{{ note.title }}</td>
-                <td>{{ note.content }}</td>
-                <td>{{ note.createdAt ? note.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ note.updatedAt ? note.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ note.remindDate ? note.remindDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_note_show', {'id': note.id}) }}">show</a>
-                    <a href="{{ path('app_note_edit', {'id': note.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+				<div id="collapse{{ note.id }}" class="collapse" aria-labelledby="heading{{ note.id }}" data-parent="#accordion">
+					<div class="card-body" style="margin-bottom: 20px">
+						<div style="position: absolute; bottom: 5px; right: 5px;">
+							<a href="{{ path('app_note_edit', {'id': note.id}) }}">
+								<img src="{{ asset('images/icon-edit.png') }}" alt="Edit" style="height: 25px">
+							</a>
+						</div>
+						{{ note.content }}
+					</div>
+				</div>
 
-    <a href="{{ path('app_note_new') }}">Create new</a>
+			</div>
+		{% else %}
+			<div class="card">
+				<div class="card-body">
+					no records found
+				</div>
+			</div>
+		{% endfor %}
+	</div>
 {% endblock %}
