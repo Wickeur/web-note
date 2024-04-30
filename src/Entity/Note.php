@@ -32,6 +32,11 @@ class Note
     #[ORM\ManyToOne(inversedBy: 'notes')]
     private ?User $autor = null;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
