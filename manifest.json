@@ -1,0 +1,27 @@
+{
+    "name": "Web_note",
+    "short_name": "Web_note",
+    "start_url": "./index.html",
+    "display": "minimal-ui",
+    "background_color": "#96c93d",
+    "theme_color": "#96c93d",
+    "orientation": "portrait",
+    "shortcuts": [
+        {
+            "name": "Messages",
+            "url": "./index.html"
+        }
+    ],
+    "icons": [
+        {
+            "src": "images/icon.png",
+            "type": "image/png",
+            "sizes": "192x192 512x512"
+        },
+        {
+            "src": "images/icon.svg",
+            "type": "image/svg+xml",
+            "purpose": "maskable"
+        }
+    ]
+}
