@@ -1,4 +1,5 @@
 const Encore = require('@symfony/webpack-encore');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -40,7 +41,7 @@ Encore
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     // enables hashed filenames (e.g. app.abc123.css)
-    .enableVersioning(false)
+    .enableVersioning(Encore.isProduction())
 
     // configure Babel
     // .configureBabel((config) => {
@@ -68,6 +69,12 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
+
+    // Add Workbox plugin for PWA support
+    .addPlugin(new InjectManifest({
+        swSrc: './assets/service-worker.js',
+        swDest: 'service-worker.js',
+    }))
 ;
 
 module.exports = Encore.getWebpackConfig();
