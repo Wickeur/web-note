@@ -1,12 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Note
+{% block title %}Créer une nouvelle note
 {% endblock %}
 
 {% block body %}
-	<h1>Create new Note</h1>
+	<h1>Créer une nouvelle note</h1>
 
 	{{ include('note/_form.html.twig') }}
-
-	<a href="{{ path('app_main') }}">back to list</a>
 {% endblock %}
