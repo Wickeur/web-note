@@ -11,12 +11,16 @@
     {# PWA #}
     <link rel="manifest" href="/manifest.json">
 
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
 <body>
     {% include '_navbar.html.twig' %}
+
+    <script src="{{ asset('build/app.js') }}"></script>
+
     <div class="container">
         {% for type, messages in app.flashes %}
             <div class="alert alert-{{ type }}">
@@ -35,19 +39,17 @@
         
         <!-- Chargement du service worker -->
         <script>
-            if ('serviceWorker' in navigator) 
-			{
-				window.addEventListener('load', () => 
-				{
-					const swPath = '/sw.js'; // Chemin vers le service worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    const swPath = '/assets/service-worker.js'; // Chemin vers le service worker
 
-					navigator.serviceWorker.register(swPath).then((registration) => {
-						console.log('Service Worker registered with scope:', registration.scope);
-					}).catch((error) => {
-						console.error('Service Worker registration failed:', error);
-					});
-				});
-			}
+                    navigator.serviceWorker.register(swPath).then((registration) => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    }).catch((error) => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+                });
+            }
         </script>
     {% endblock %}
 </body>

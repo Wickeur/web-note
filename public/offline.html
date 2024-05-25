@@ -1,10 +1,11 @@
+<!-- public/offline.html -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Offline</title>
+    <link rel="stylesheet" href="/build/app.css">
     <style>
         body {
             display: flex;
@@ -18,12 +19,29 @@
         }
     </style>
 </head>
-
 <body>
     <div>
         <h1>Vous êtes hors ligne</h1>
         <p>Il semble que vous n'êtes pas connecté à Internet. Veuillez vérifier votre connexion.</p>
+        <script>
+            // Vérifiez le statut de la connexion et redirigez vers la page d'accueil si en ligne
+            function checkOnlineStatus() {
+                if (navigator.onLine) {
+                    window.location.href = '/';
+                }
+            }
+
+            // Vérifiez immédiatement le statut de la connexion
+            checkOnlineStatus();
+
+            // Continuez à vérifier la connexion à intervalles réguliers
+            setInterval(checkOnlineStatus, 5000);
+
+            // Écoutez l'événement "online" pour redirection immédiate
+            window.addEventListener('online', () => {
+                window.location.href = '/';
+            });
+        </script>
     </div>
 </body>
-
 </html>
