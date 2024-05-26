@@ -1,3 +1,8 @@
+<style>
+    .offline .needs-online {
+        display: none;
+	}
+</style>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div class="container">
 		<a class="navbar-brand" href="{{ path('app_main') }}">
@@ -8,15 +13,15 @@
 		</button>
 		<div class="collapse navbar-collapse ">
 			{% if app.user %}
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_main') }}">Mes notes</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_note_new') }}">Ajouter une note</a>
-					</li>
-				</ul>
-			{% endif %}
+                <ul class="navbar-nav needs-online">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_main') }}">Mes notes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_note_new') }}">Ajouter une note</a>
+                    </li>
+                </ul>
+            {% endif %}
 		</div>
 		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 			{% if app.user %}
@@ -43,3 +48,19 @@
 		</div>
 	</div>
 </nav>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+    function updateOnlineStatus() {
+        const onlineElements = document.querySelectorAll('.needs-online');
+        onlineElements.forEach(elem => {
+            elem.style.display = navigator.onLine ? '' : 'none';
+        });
+    }
+
+    window.addEventListener('online',  updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+
+    updateOnlineStatus(); // Appel initial pour mettre à jour le statut dès le chargement
+});
+</script>

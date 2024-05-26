@@ -1,5 +1,4 @@
 const Encore = require('@symfony/webpack-encore');
-const { InjectManifest } = require('workbox-webpack-plugin');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -8,11 +7,11 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
-    // directory where compiled assets will be stored
+    // Directory where compiled assets will be stored
     .setOutputPath('public/build/')
-    // public path used by the web server to access the output path
+    // Public path used by the web server to access the output path
     .setPublicPath('/build')
-    // only needed for CDN's or subdirectory deploy
+    // Only needed for CDN's or subdirectory deploy
     //.setManifestKeyPrefix('build/')
 
     /*
@@ -23,10 +22,10 @@ Encore
      */
     .addEntry('app', './assets/app.js')
 
-    // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
+    // When enabled, Webpack "splits" your files into smaller pieces for greater optimization
     .splitEntryChunks()
 
-    // will require an extra script tag for runtime.js
+    // Will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
 
@@ -40,41 +39,36 @@ Encore
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
-    // enables hashed filenames (e.g. app.abc123.css)
+    // Enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
-    // configure Babel
+    // Configure Babel
     // .configureBabel((config) => {
     //     config.plugins.push('@babel/a-babel-plugin');
     // })
 
-    // enables and configure @babel/preset-env polyfills
+    // Enables and configure @babel/preset-env polyfills
     .configureBabelPresetEnv((config) => {
         config.useBuiltIns = 'usage';
         config.corejs = '3.23';
     })
 
-    // enables Sass/SCSS support
+    // Enables Sass/SCSS support
     .enableSassLoader()
 
-    // uncomment if you use TypeScript
+    // Uncomment if you use TypeScript
     //.enableTypeScriptLoader()
 
-    // uncomment if you use React
+    // Uncomment if you use React
     //.enableReactPreset()
 
-    // uncomment to get integrity="..." attributes on your script & link tags
-    // requires WebpackEncoreBundle 1.4 or higher
+    // Uncomment to get integrity="..." attributes on your script & link tags
+    // Requires WebpackEncoreBundle 1.4 or higher
     //.enableIntegrityHashes(Encore.isProduction())
 
-    // uncomment if you're having problems with a jQuery plugin
+    // Uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
 
-    // Add Workbox plugin for PWA support
-    .addPlugin(new InjectManifest({
-        swSrc: './assets/service-worker.js',
-        swDest: 'service-worker.js',
-    }))
 ;
 
 module.exports = Encore.getWebpackConfig();
