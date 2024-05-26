@@ -1,3 +1,5 @@
+# Groupe : LEULIET Quentin & WICKE Julian
+
 # Projet : Gestionnaire de Notes
 
 Bienvenue dans le projet Gestionnaire de Notes ! Ce document fournit une vue d'ensemble des fonctionnalités développées ainsi que des instructions pour installer et utiliser le projet.
