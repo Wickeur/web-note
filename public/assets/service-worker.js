@@ -5,7 +5,9 @@ const CACHE_NAME = 'my-cache-v1';
 const URLS_TO_CACHE = [
     '/',
     '/build/app.css',
-    '/build/app.js', 
+    '/build/app.js',
+    '/assets/images/logo.png',
+    '/offline.html'
 ];
 
 // Événement d'installation du service worker
@@ -13,8 +15,7 @@ self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
         .then((cache) => {
-            console.log('Opened cache');
-            return cache.addAll(URLS_TO_CACHE);
+            cache.addAll(URLS_TO_CACHE);
         })
         .catch((error) => console.error('Failed to open cache:', error))
     );
@@ -59,3 +60,5 @@ self.addEventListener('fetch', (event) => {
         })
     );
 });
+
+
