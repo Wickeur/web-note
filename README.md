@@ -11,10 +11,10 @@ L'utilisateur peut modifier une note existante. En sélectionnant une note, vous
 ### 3. Système de Gestion des Utilisateurs
 Le projet inclut un système de gestion des utilisateurs. Les fonctionnalités de gestion incluent :
 
-Inscription : Les nouveaux utilisateurs peuvent créer un compte.
-Connexion : Les utilisateurs peuvent se connecter à leur compte existant.
-Déconnexion : Les utilisateurs peuvent se déconnecter de leur session.
-Gestion de profil : Les utilisateurs peuvent mettre à jour leurs informations de profil.
+- Inscription : Les nouveaux utilisateurs peuvent créer un compte.
+- Connexion : Les utilisateurs peuvent se connecter à leur compte existant.
+- Déconnexion : Les utilisateurs peuvent se déconnecter de leur session.
+- Gestion de profil : Les utilisateurs peuvent mettre à jour leurs informations de profil.
 
 ### 4. Mise en Place d'une Progressive Web App (PWA)
 Le projet a été transformé en une Progressive Web App (PWA). Cela signifie que l'application est installable sur les appareils mobiles et de bureau. Les utilisateurs peuvent ajouter l'application à leur écran d'accueil pour une expérience utilisateur plus native.
