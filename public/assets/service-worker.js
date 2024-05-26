@@ -1,70 +1,61 @@
+// Nom du cache pour la version actuelle de l'application
 const CACHE_NAME = 'my-cache-v1';
-const OFFLINE_URL = '/offline.html';
 
-// Installation du service worker
+// Liste des ressources à mettre en cache
+const URLS_TO_CACHE = [
+    '/',
+    '/build/app.css',
+    '/build/app.js', 
+];
+
+// Événement d'installation du service worker
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        // Mise en cache des ressources nécessaires
-        return cache.addAll([
-          OFFLINE_URL,
-          '/', // Page d'accueil
-          '/build/app.css', // Ressources CSS
-          '/build/app.js', // Ressources JS
-          // Ajoutez ici d'autres fichiers à mettre en cache
-        ]);
-      })
-  );
-});
-
-// Activation du service worker
-self.addEventListener('activate', (event) => {
-  // Suppression des caches obsolètes
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.filter((name) => {
-          return name !== CACHE_NAME;
-        }).map((name) => {
-          return caches.delete(name);
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+        .then((cache) => {
+            console.log('Opened cache');
+            return cache.addAll(URLS_TO_CACHE);
         })
-      );
-    })
-  );
+        .catch((error) => console.error('Failed to open cache:', error))
+    );
 });
 
-// Écoute des événements fetch
+// Événement d'activation du service worker pour nettoyer les anciennes versions du cache
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    if (cacheName !== CACHE_NAME) {
+                        console.log('Deleting old cache:', cacheName);
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+});
+
+// Écoute les événements fetch pour servir les réponses du cache ou via le réseau
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    // Recherche dans le cache
-    caches.match(event.request)
-      .then((response) => {
-        // Renvoie la réponse du cache si elle existe
-        if (response) {
-          return response;
-        }
-
-        // Sinon, effectue une requête réseau
-        return fetch(event.request)
-          .then((response) => {
-            // Vérifie si la réponse est valide
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // Clone la réponse pour la mettre en cache
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          });
-      }).catch(() => {
-        // En cas d'échec, renvoie la page hors ligne
-        return caches.match(OFFLINE_URL);
-      })
-  );
+    event.respondWith(
+        fetch(event.request).catch(() => {
+            return caches.match(event.request)
+                .then((response) => {
+                    if (response) {
+                        return response;
+                    }
+                    // Si la requête concerne une API, vous pouvez retourner une réponse JSON personnalisée
+                    if (event.request.url.endsWith('/api/data')) {
+                        return new Response(JSON.stringify({ error: "Network error occurred, and no cache data available." }), {
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                    }
+                    // Retourne une réponse générique pour d'autres types de requêtes si aucune correspondance n'est trouvée dans le cache
+                    return new Response("Vous êtes hors ligne et les données demandées ne sont pas disponibles.", {
+                        headers: { 'Content-Type': 'text/plain' }
+                    });
+                });
+        })
+    );
 });
