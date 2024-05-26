@@ -20,7 +20,7 @@ Le projet inclut un système de gestion des utilisateurs. Les fonctionnalités d
 Le projet a été transformé en une Progressive Web App (PWA). Cela signifie que l'application est installable sur les appareils mobiles et de bureau. Les utilisateurs peuvent ajouter l'application à leur écran d'accueil pour une expérience utilisateur plus native.
 
 ### 5. Mise en Cache de la Page des Notes en Mode Hors Ligne
-Pour améliorer l'expérience utilisateur, surtout en cas de connexion internet instable, la page des notes est mise en cache. Cela permet aux utilisateurs de consulter et de modifier leurs notes même lorsqu'ils sont hors ligne. Les modifications seront synchronisées avec le serveur une fois la connexion rétablie.
+Pour améliorer l'expérience utilisateur, surtout en cas de connexion internet instable, la page des notes est mise en cache. Cela permet aux utilisateurs de consulter leurs notes même lorsqu'ils sont hors ligne. Les modifications seront synchronisées avec le serveur une fois la connexion rétablie.
 
 ### 6. Affichage Conditionnel des Fonctionnalités en Mode Hors Ligne
 Certaines fonctionnalités sont inaccessibles en mode hors ligne. Pour améliorer la clarté et l'expérience utilisateur, les pages et options non disponibles en mode hors ligne sont automatiquement masquées. Cela permet d'éviter les erreurs et d'optimiser l'utilisation de l'application dans toutes les conditions.
